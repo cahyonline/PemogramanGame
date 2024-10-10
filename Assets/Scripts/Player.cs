@@ -35,6 +35,16 @@ public class Player : MonoBehaviour
             direction = Vector3.up * strength;
         }
 
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                direction = Vector3.up * strength;
+                direction = Vector3.up *strength;
+            }
+        }
+
         direction.y += garvity *Time.deltaTime;
         transform.position+= direction * Time.deltaTime;
     }
@@ -48,14 +58,25 @@ public class Player : MonoBehaviour
         spriteRenderer.sprite = sprites[spriteIndex];
     }
     private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.gameObject.tag == "OFF")
     {
-        if (other.gameObject.tag == "OFF"){
+        if (audioManager != null)
+        {
+            
             audioManager.PlaySFX(audioManager.death);
-            Debug.Log("K");
-            FindObjectOfType<GameManager>().GameOver();
-        }else if (other.gameObject.tag =="Kon"){
-            audioManager.PlaySFX(audioManager.point);
-            FindAnyObjectByType<GameManager>().IncreaseScore();
         }
+        FindObjectOfType<GameManager>().GameOver();
     }
+    else if (other.gameObject.tag == "Kon")
+    {
+        if (audioManager != null)
+        {
+            
+            audioManager.PlaySFX(audioManager.point);
+        }
+        FindObjectOfType<GameManager>().IncreaseScore();
+    }
+}
+
 }

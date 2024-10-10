@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
   public void IncreaseScore()
   {
     score++;
-    audioManager.PlaySFX(audioManager.point);
     scoreText.text = score.ToString();
   }
 }
